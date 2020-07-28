@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.frame.dao.IChatInfoDao">
+    <resultMap id="BaseResultMap" type="edu.njucm.book.frame.domain.chat.ChatInfo">
+        <id column="chat_id" property="chatId" jdbcType="NUMERIC"/>
+        <result column="chapter_id" property="chapterId" jdbcType="NUMERIC"/>
+        <result column="link_chat_id" property="linkChatId" jdbcType="NUMERIC"/>
+        <result column="user_id" property="userId" jdbcType="NUMERIC"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="top_num" property="topNum" jdbcType="NUMERIC"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="add" parameterType="edu.njucm.book.frame.domain.chat.ChatInfo">
+        insert into book.chat_info(chapter_id, link_chat_id, user_id, content, top_num)
+        values (#{chapterId}, #{linkChatId}, #{userId}, #{content}, #{topNum})
+    </insert>
+
+    <update id="top" parameterType="Long">
+        update chat_info
+        set top_num = #{topNum}
+        where chat_id = #{chatId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from book.chat_info
+        where chat_id = #{chatId}
+    </delete>
+
+    <select id="listByChapterId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select chat_id, chapter_id, link_chat_id, user_id, content, top_num, add_time
+        from book.chat_info
+        where chapter_id = #{chapterId}
+    </select>
+
+    <select id="getByChatId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select chat_id, chapter_id, link_chat_id, user_id, content, top_num, add_time
+        from chat_info
+        where chat_id = #{chatId}
+    </select>
+
+    <select id="listByLinkChatId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select chat_id, chapter_id, link_chat_id, user_id, content, top_num, add_time
+        from book.chat_info
+        where link_chat_id = #{linkChatId}
+    </select>
+
+</mapper>

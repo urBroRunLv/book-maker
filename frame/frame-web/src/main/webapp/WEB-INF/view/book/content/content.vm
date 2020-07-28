@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>all chapters</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>内容列表</p>
+        <p class="en">All Contents</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/book/detail/$!book.bookId">$!book.bookName</a> > <a
+            href="/chapter/list?bookId=$!book.bookId">章节列表</a> > <span>内容列表</span>
+    </div>
+    #if($!canEdit==true)
+        <div class="nav-right">
+            <button onclick="window.location.href='//www.book.com/question/list?chapterId=$!chapterInfo.chapterId'"
+                    class="layui-btn">
+                查看习题列表
+            </button>
+            <button onclick="window.location.href='//www.book.com/content/addFromTxt?chapterId=$!chapterInfo.chapterId'"
+                    class="layui-btn">
+                批量导入内容
+            </button>
+            <button onclick="window.location.href='//www.book.com/content/add?chapterId=$!chapterInfo.chapterId'"
+                    class="layui-btn">
+                新增内容
+            </button>
+            <span>注：只能在最后新增</span>
+        </div>
+    #end
+</div>
+<div class="layui-container  public-bg">
+    <div class="cnt-wrap">
+        <div class="no-result #if($contents.empty)show #else hide#end">#*show：显示  hide：隐藏*#
+            <img src="../../../img/kong.png" alt="">
+            <div class="no-result-text">列表空空如也~</div>
+        </div>
+        #foreach($content in $contents)
+            #set($type = $content.contentType)
+            <div class="cnt-list">
+                #if($type == 1)
+                    <div class="cnt-list-left">
+                        <span>$!content.contentName</span>
+                        <span>$!content.text</span>
+                    </div>
+                #elseif($type == 2)
+                    <div class="cnt-list-left">
+                        <span>$!content.contentName</span>
+                        <img src="//www.book.com/getPicByPicId/${content.picId}"
+                             alt="$content.contentName}">
+                    </div>
+                #elseif($type == 3)
+                    <div class="cnt-list-left">
+                        <span>$!content.contentName</span>
+                    </div>
+                #elseif($type == 4)
+                    <div class="cnt-list-left">
+                        <span><img src="../../../img/zhuyi.png" alt="">$!content.contentName</span>
+                        <span>$!content.text</span>
+                    </div>
+                #end
+                #if($!canEdit==true)
+                    <button class="layui-btn"
+                            onclick="window.location.href='//www.book.com/content/update/$content.contentId'">修改
+                    </button>
+                #end
+            </div>
+        #end
+    </div>
+</div>
+
+    #if($!chapterInfo.canChat())
+    <div class="layui-container public-bg">
+        <div class="content-tit layui-btn J-add-comment" data-chapterId="$!chapterInfo.chapterId">添加评论</div>
+        <div class="content-list">
+
+            #foreach($chat in $!{chatVOs})
+                <div class="content-li J-content-li">
+                    <div class="content-cnt">
+                        <div class="content-left">
+                            <span>$!chat.author：</span>
+                            #if($!chat.chatTo)
+                                <span>回复 $!chat.chatTo：</span>
+                            #end
+                            <span>$!chat.content</span>
+                        </div>
+                        <div class="content-btn">
+                    <span class="btn-zan-wrap">
+                        #if($chat.hasTop)
+                            <img class="btn-zan btn-zan-active J-btn-zan J-btn-zan-active" data-chatId="$!chat.chatId"
+                                 src="../../../img/zan_active.png" alt="">
+                        #else
+                            <img class="btn-zan J-btn-zan" data-chatId="$!chat.chatId" src="../../../img/zan.png"
+                                 alt="">
+                        #end
+                        <span class="btn-num J-btn-num">$!chat.topNum</span>
+                    </span>
+                            <input type="hidden" id="linkChatId" name="linkChatId" value="$!chat.chatToId">
+                            #if($!chat.authorId == $!userId)
+                                <span class="btn-reply J-btn-del" data-chatId="$!chat.chatId">删除</span>
+                            #else
+                                <span class="btn-reply J-btn-replay" data-chapterId="$!chapterInfo.chapterId">回复</span>
+                            #end
+                        </div>
+                    </div>
+                </div>
+            #end
+
+            <div class="no-result #if($chatVOs.empty)show #else hide#end">#*show：显示  hide：隐藏*#
+                <img src="../../../img/kong.png" alt="">
+                <div class="no-result-text">暂无人评论，快来第一个发言吧~</div>
+            </div>
+
+        </div>
+    </div>
+    #end
+
+<div id="casePage"></div>
+
+<div class="dialog J-dialog">
+    <div class="dialog-bg J-dialog-close"></div>
+    <div class="dialog-wrap">
+        <input type="hidden" name="replayIndex" value="">
+        <div class="dialog_close J-dialog-close"><img src="../../../img/close_ico.png" alt=""></div>
+        <div class="dialog-cnt">
+            <textarea name="replayText" class="dialog-textarea" placeholder="回复内容"></textarea>
+            <div class="dialog-btn layui-btn J-dialog-btn">评论</div>
+        </div>
+    </div>
+</div>
+
+    #parse("headfoot/footer.vm")
+<script src="../../../js/jquery.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/content.js"></script>
+</body>
+</html>
+

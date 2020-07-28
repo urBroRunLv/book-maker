@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.frame.dao.IQuestionInfoDao">
+    <resultMap id="BaseResultMap" type="edu.njucm.book.frame.domain.QuestionInfo">
+        <id column="question_id" property="questionId" jdbcType="NUMERIC"/>
+        <result column="content_id" property="contentId" jdbcType="NUMERIC"/>
+        <result column="question_type" property="questionType" jdbcType="NUMERIC"/>
+        <result column="question_text_id" property="questionTextId" jdbcType="NUMERIC"/>
+        <result column="answer_text_id" property="answerTextId" jdbcType="NUMERIC"/>
+        <result column="pic_id" property="picId" jdbcType="NUMERIC"/>
+        <result column="question_status" property="questionStatus" jdbcType="NUMERIC"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="save" parameterType="edu.njucm.book.frame.domain.QuestionInfo">
+        insert into book.question_info(question_id, content_id, question_type,
+            question_text_id, answer_text_id, pic_id, question_status, add_time)
+        values (#{questionId}, #{contentId}, #{questionType}, #{questionTextId},
+            #{answerTextId}, #{picId}, #{questionStatus}, now())
+    </insert>
+
+    <update id="update" parameterType="edu.njucm.book.frame.domain.QuestionInfo">
+        update book.question_info
+        set content_id = #{contentId},
+            question_type = #{questionType},
+            question_text_id = #{questionTextId},
+            answer_text_id = #{answerTextId},
+            pic_id = #{picId},
+            question_status = #{questionStatus}
+        where question_id = #{questionId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from book.question_info
+        where question_id = #{questionId}
+    </delete>
+
+    <select id="getQuestionInfoByQuestionId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select question_id, content_id, question_type, question_text_id, answer_text_id, pic_id, question_status, add_time
+        from book.question_info
+        where question_id = #{questionId}
+        and question_status = 0
+    </select>
+
+    <select id="getQuestionInfoList" resultMap="BaseResultMap">
+        select question_id, content_id, question_type, question_text_id, answer_text_id, pic_id, question_status, add_time
+        from book.question_info
+        where question_status = 0
+        AND content_id in
+        <foreach collection="contentIds" item="contentId" open="(" close=")" separator=",">
+            #{contentId}
+        </foreach>
+        <if test="questionType != null">
+            and question_type = #{questionType}
+        </if>
+    </select>
+</mapper>

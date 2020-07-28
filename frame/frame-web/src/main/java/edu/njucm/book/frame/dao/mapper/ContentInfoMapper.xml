@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.frame.dao.IContentInfoDao">
+    <resultMap id="BaseResultMap" type="edu.njucm.book.frame.domain.ContentInfo">
+        <id column="content_id" property="contentId" jdbcType="NUMERIC"/>
+        <result column="chapter_id" property="chapterId" jdbcType="NUMERIC"/>
+        <result column="text_id" property="textId" jdbcType="NUMERIC"/>
+        <result column="pic_id" property="picId" jdbcType="NUMERIC"/>
+        <result column="content_name" property="contentName" jdbcType="VARCHAR"/>
+        <result column="content_type" property="contentType" jdbcType="NUMERIC"/>
+        <result column="content_status" property="contentStatus" jdbcType="NUMERIC"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="save" parameterType="edu.njucm.book.frame.domain.ContentInfo">
+        insert into book.content_info(chapter_id, text_id, pic_id, content_name, content_type, content_status, add_time)
+        values (#{chapterId}, #{textId}, #{picId} ,#{contentName} ,#{contentType} ,#{contentStatus} , now())
+    </insert>
+
+    <update id="update" parameterType="edu.njucm.book.frame.domain.ContentInfo">
+        update book.content_info
+        set chapter_id = #{chapterId},
+            text_id = #{textId},
+            pic_id = #{picId},
+            content_name = #{contentName},
+            content_type = #{contentType},
+            content_status = #{contentStatus}
+        where content_id = #{contentId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from book.content_info
+        where content_id = #{contentId}
+    </delete>
+
+    <select id="getContentInfoByContentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select content_id, chapter_id, text_id, pic_id, content_name, content_type, content_status, add_time
+        from book.content_info
+        where content_id = #{contentId}
+        and content_status = 0
+    </select>
+
+    <select id="listContentInfoByChapterId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select content_id, chapter_id, text_id, pic_id, content_name, content_type, content_status, add_time
+        from book.content_info
+        where chapter_id = #{chapterId}
+        and content_status = 0
+        order by add_time asc
+    </select>
+
+    <select id="listContentIdByChapterId" resultType="java.lang.Long">
+        select content_id
+        from book.content_info
+        where chapter_id = #{chapterId}
+        and content_status = 0
+        order by add_time asc
+    </select>
+</mapper>

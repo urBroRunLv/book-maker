@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理讨论区</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>管理讨论列表</p>
+        <p class="en">Chat Boxes</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/user">账户中心</a> > <span>管理讨论区</span></div>
+</div>
+<div class="layui-container">
+
+    #foreach($VO in $!allVOs)
+        <div class="manage-wrap">
+
+            <div class="manage-list">
+                <div class="manage-tit">《$!{VO.bookVO.bookName}》
+                    <div class="#if($VO.chapterVOs.empty)show #else hide#end">#*show：显示  hide：隐藏*#
+                        <img src="../../../img/zhuyi.png" alt="">
+                        本书暂无章节~
+                    </div>
+                </div>
+                <div class="manage-list-cnt">
+                    #foreach($chapterVO in $!VO.chapterVOs)
+                        <div class="manage-li J-manage-li" data-chapterId="$!chapterVO.chapterId">
+                            <div class="manage-ftit">
+                                <div class="manage-tit-top">
+                                    <span>第${chapterVO.chapterNo}章 $chapterVO.chapterName</span>
+                                    <div class="swich J-switch #if($!chapterVO.chatFlag==1)swich-on#end">
+                                        <input type="checkbox" value="" name="switch"/>
+                                        <div class="box">
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                #if($!chapterVO.chatFlag==1)
+                                    <div class="#if($chapterVO.chatVOs.empty)show #else hide#end">#*show：显示  hide：隐藏*#
+                                        <img src="../../../img/zhuyi.png" alt="">
+                                        暂无人评论~
+                                    </div>
+                                #end
+                            </div>
+                            #if($!chapterVO.chatFlag==1)
+                                <div class="content-list">
+                                    #foreach($chat in $chapterVO.chatVOs)
+                                        <div class="content-li J-content-li">
+                                            <div class="content-cnt">
+                                                <div class="content-left">
+                                                    <span>$!chat.author：</span>
+                                                    #if($!chat.chatTo)
+                                                        <span>回复 $!chat.chatTo：</span>
+                                                    #end
+                                                    <span>$!chat.content</span>
+                                                </div>
+                                                <div class="content-btn">
+                                    <span class="btn-zan-wrap">
+                                        #if($chat.hasTop)
+                                            <img class="btn-zan btn-zan-active J-btn-zan J-btn-zan-active"
+                                                 data-chatId="$!chat.chatId"
+                                                 src="../../../img/zan_active.png" alt="">
+                                        #else
+                                            <img class="btn-zan J-btn-zan" data-chatId="$!chat.chatId"
+                                                 src="../../../img/zan.png"
+                                                 alt="">
+                                        #end
+                                        <span class="btn-num J-btn-num">$!chat.topNum</span>
+                                    </span>
+                                                    <input type="hidden" id="linkChatId" name="linkChatId"
+                                                           value="$!chat.chatToId">
+                                                    <span class="btn-reply J-btn-replay"
+                                                          data-chapterId="$!chapterVO.chapterId">回复</span>
+                                                    <span class="btn-del J-btn-del"
+                                                          data-chatId="$!chat.chatId">删除</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    #end
+
+                                </div>
+                            #end
+
+                        </div>
+                    #end
+                </div>
+            </div>
+
+        </div>
+    #end
+
+    <div id="casePage"></div>
+
+    <div class="dialog J-dialog">
+        <div class="dialog-bg J-dialog-close"></div>
+        <div class="dialog-wrap">
+            <input type="hidden" name="replayIndex" value="">
+            <div class="dialog_close J-dialog-close"><img src="../../../img/close_ico.png" alt=""></div>
+            <div class="dialog-cnt">
+                <textarea name="replayText" class="dialog-textarea" placeholder="回复内容"></textarea>
+                <div class="dialog-btn layui-btn J-dialog-btn">评论</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-result #if($allVOs.empty)show #else hide#end">#*show：显示  hide：隐藏*#
+        <img src="../../../img/kong.png" alt="">
+        <div class="no-result-text">您暂时没有可管理讨论~</div>
+    </div>
+
+</div>
+    #parse("headfoot/footer.vm")
+<script src="../../../js/jquery.js"></script>
+<script src="../../../js/bookList.js"></script>
+<script src="../../../js/content.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.njucm.book.chart.dao.ChartInfoMapper">
+
+
+
+    <insert id="addChartInfo" useGeneratedKeys="true" keyProperty="chartId">
+
+        insert into chart_info(`book_id`,`chapter`,`section`,`paragraph`,
+        `knowledge`,`exercise`,`position`,`chart_name`,`update_time`,`update_person`,`data_type`)
+        values
+        (
+        #{bookId},#{chapter},#{section},#{paragraph},
+        #{knowledge},#{exercise},#{position},#{chartName},
+        now(),#{updatePerson},#{dataType}
+        )
+
+    </insert>
+
+    <select id="count" resultType="java.lang.Long">
+
+        select count(*) from chart_info
+
+    </select>
+
+    <select id="findAll" resultType="chartInfo">
+        select a.*
+        from chart_info a,(select chart_id from chart_info limit #{start},#{rows})b
+        where a.chart_id=b.chart_id
+    </select>
+
+    <select id="findByPosition" resultType="chartInfo">
+
+        select * from chart_info
+        <trim prefix="where" suffixOverrides="and">
+
+            <if test="chapter!=null">chapter=#{chapter} and</if>
+
+            <if test="section!=null">section=#{section} and</if>
+
+            <choose>
+
+                <when test="paragraph!=null">paragraph=#{paragraph}</when>
+
+                <when test="knowledge!=null">knowledge=#{knowledge}</when>
+
+                <when test="exercise!=null">exercise=#{exercise}</when>
+
+            </choose>
+
+        </trim>
+
+    </select>
+
+    <delete id="deleteByIds">
+        delete from chart_info where chart_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateById">
+        update chart_info a,
+        <if test="dataType==1">
+            pic_content
+        </if>
+        <if test="dataType==2">
+            tab_content
+        </if>
+         b
+        `set` chapter=#{chapter},
+        `section`=#{section},
+        paragraph=#{paragraph},
+        knowledge=#{knowledge},
+        exercise=#{exercise},
+        content=#{content},
+        `position`=#{position},
+        chart_name=#{chartName},
+        update_time=now()
+        where chart_id=#{chartId} and a.chart_id=b.id
+
+    </update>
+
+</mapper>

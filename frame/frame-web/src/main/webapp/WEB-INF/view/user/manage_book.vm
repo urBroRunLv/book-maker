@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分配书本</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>分配书本</p>
+        <p class="en">Distribute Books</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/user">账户中心</a> > <span>分配书本</span></div>
+</div>
+<div class="layui-container">
+    <div class="account-center public-bg">
+        <div class="account-user">
+            #if($!books.empty)
+                <div class="account-li">
+                    <div class="account-text"></div>
+                    <div class="account-right">暂无可分配书本，请<a href="/book/add">添加</a></div>
+                </div>
+            #end
+            #foreach($book in $!books)
+                <div class="account-list">
+                    <div class="account-cnt">
+                        <div class="account-li">
+                            <div class="account-text">书本id:</div>
+                            <div class="account-right">$!book.bookId</div>
+                        </div>
+                        <div class="account-li">
+                            <div class="account-text">书本名:</div>
+                            <div class="account-bookName">《$!book.bookName》</div>
+                        </div>
+                    </div>
+                    <div class="account-btn-book">
+                        <form id="form" name="form" action="/manage/book" method="post">
+                            <input class="account-input" type="text" id="userIds" name="userIds" placeholder="请输入需要分配的用户id，用英文逗号隔开">
+                            <input type="hidden" id="bookId" name="bookId" value="$!book.bookId">
+                            <button type="submit" class="layui-btn">分配</button>
+                        </form>
+                    </div>
+                </div>
+            #end
+        </div>
+    </div>
+</div>
+    #parse("headfoot/footer.vm")
+<script src="../../js/jquery.js"></script>
+<script src="../../js/bookList.js"></script>
+<script src="../../js/content.js"></script>
+</body>
+</html>

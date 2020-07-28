@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.user.dao.IUserBookMapDao">
+    <resultMap id="baseResultMap" type="edu.njucm.book.user.domain.UserBookMap">
+        <result property="recId" column="rec_id"/>
+        <result property="bookId" column="book_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="addTime" column="add_time"/>
+    </resultMap>
+
+    <insert id="add" parameterType="edu.njucm.book.user.domain.UserBookMap" keyProperty="user.userId" useGeneratedKeys="true" keyColumn="rec_id">
+        insert into user_book_map(book_id, user_id)
+        values(#{map.bookId}, #{map.userId})
+    </insert>
+
+    <update id="delete" parameterType="java.lang.Long">
+        update user_book_map set
+        delete_flag = 1,
+        where rec_id = #{recId}
+    </update>
+
+    <update id="deleteByBookId" parameterType="java.lang.Long">
+        update user_book_map set
+        delete_flag = 1
+        where book_id = #{bookId}
+    </update>
+
+    <select id="listByUserId" resultMap="baseResultMap">
+        select distinct rec_id, book_id, user_id, delete_flag, add_time
+        from user_book_map
+        where user_id = #{userId}
+        and delete_flag = 0
+    </select>
+
+    <select id="listByBookId" resultMap="baseResultMap">
+        select rec_id, book_id, user_id, delete_flag, add_time
+        from user_book_map
+        where book_id = #{bookId}
+        and delete_flag = 0
+    </select>
+
+    <select id="countByUserIdAndBookId" resultType="java.lang.Integer">
+        select count(1) from user_book_map
+        where user_id = #{userId}
+        and book_id = #{bookId}
+        and delete_flag = 0
+    </select>
+
+</mapper>

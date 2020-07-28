@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>question detail</title>
+    <link rel="stylesheet" type="text/css" href="../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>习题详情</p>
+        <p class="en">Question Detail</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/book/list">书籍列表</a> > <a
+            href="//www.book.com/chapter/list?bookId=$!book.bookId">章节列表</a> > <span>习题列表</span>
+    </div>
+    <div class="nav-item">
+        <span>请选择你要查看的题型：</span>
+        <select name="qType" id="qType" align="center"
+                onchange="window.location.href='/question/list?chapterId=$!chapterId&type='+this.value">
+            <option value="" #if($!type) #else selected#end>所有题型</option>
+            <option value="0" #if($!type==0)selected#end>选择题</option>
+            <option value="1" #if($!type==1)selected#end>填空题</option>
+            <option value="2" #if($!type==2)selected#end>简答题</option>
+        </select>
+    </div>
+    <div class="nav-right">
+        <button onclick="window.location.href='//www.book.com/question/addFromTxt?chapterId=$!chapterId'" class="layui-btn">
+            批量导入习题
+        </button>
+        <button onclick="window.location.href='//www.book.com/question/add?chapterId=$!chapterId'" class="layui-btn">
+            新增习题
+        </button>
+        <button onclick="window.location.href='//www.book.com/question/test/selectNum?chapterId=$!chapterId'"
+                class="layui-btn">生成测试卷
+        </button>
+    </div>
+</div>
+<div class="layui-container public-bg">
+    <div class="question-li J-question-li">
+        <div class="question-li-cnt">
+            #if($!questions.empty)
+                <div class="no-result show">#*show：显示  hide：隐藏*#
+                    <img src="../../img/kong.png" alt="">
+                    <div class="no-result-text">列表空空如也~</div>
+                </div>
+            #else
+
+                <table class="layui-table" border="1" width="100%" align="center">
+                    <colgroup>
+                        <col width="8%">
+                        <col width="19%">
+                        <col width="15%">
+                        <col width="8%">
+                        <col width="12%">
+                        <col width="20%">
+                        <col width="17%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>题型</th>
+                        <th>关联知识点名（id）</th>
+                        <th>题干</th>
+                        <th>配图</th>
+                        <th>答案</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        #foreach($question in $questions)
+                        <tr>
+                            <td>$!question.questionType</td>
+                            <td>$!question.contentName（id:$!question.contentId）</td>
+                            <td>$!question.question</td>
+                            <td>
+                                #if($!question.base64Pic)
+                                    <img src="$!question.base64Pic" alt="附图">
+                                #else
+                                    无
+                                #end
+                            </td>
+                            <td>$!question.answer</td>
+                            <td>$!question.addTime</td>
+                            <td>
+                                <button type="button" class="layui-btn"
+                                        onclick="window.location.href='/question/update?questionId=$question.questionId'">修改
+                                </button>
+                                <button type="button" data-questionId="${question.questionId}"
+                                        class="layui-btn J-question-del">删除
+                                </button>
+                            </td>
+
+                        </tr>
+                        #end
+                    </tbody>
+                </table>
+            #end
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="layui-container">
+        <p class="footer-web">
+            <a href="//www.book.com">首页</a>
+            <a href="//user.book.com/register">注册</a>
+            <a href="//user.book.com/login">登录</a>
+        </p>
+        <div class="layui-row footer-contact">
+            <div class="layui-col-sm2 layui-col-lg1"><img style="height:100px; width:100px;" src="../../img/vx.jpg"
+                                                          alt="vx"/></div>
+            <div class="layui-col-sm10 layui-col-lg11">
+                <div class="layui-row">
+                    <div class="layui-col-sm6 layui-col-md8 layui-col-lg9">
+                        <p class="contact-top"><i class="layui-icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;+86 18811111111&nbsp;&nbsp;
+                        </p>
+                        <p class="contact-bottom"><i class="layui-icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;ohouhou@163.com</p>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-md4 layui-col-lg3">
+                        <p class="contact-bottom"><span class="right">南京中医药大学&nbsp;&nbsp;计算机162班&nbsp;</span></p>
+                        <p class="contact-bottom"><span class="right">084416239&nbsp;黄蕾</span></p>
+                        <p class="contact-bottom"><span class="right">毕业设计</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/questionList.js"></script>
+</body>
+</html>

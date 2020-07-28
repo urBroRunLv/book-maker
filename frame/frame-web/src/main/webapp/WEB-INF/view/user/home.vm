@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Account Center</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>账户中心</p>
+        <p class="en">Account Center</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <span>账户中心</span></div>
+</div>
+<div class="layui-container">
+    <div class="account-center public-bg">
+        <div class="account-li">
+            <div class="account-text">头像:</div>
+            <div class="account-right account-head"><img src="../../img/header.png" alt=""></div>
+        </div>
+        <div class="account-li">
+            <div class="account-text">用户ID:</div>
+            <div class="account-right J-user-id">$!vo.id</div>
+        </div>
+        <div class="account-li">
+            <div class="account-text">用户名:</div>
+            <div class="account-right">$!vo.name</div>
+            <a href="javascript:void(0)" class="J-edit-name">&nbsp;&nbsp;&nbsp;修改用户名</a>
+        </div>
+        <div class="account-li">
+            <div class="account-text">手机号:</div>
+            <div class="account-right">$!vo.phone</div>
+        </div>
+        <div class="account-li">
+            <div class="account-text">用户身份:</div>
+            <div class="account-right">$!vo.userTypeName</div>
+        </div>
+        #if($!vo.userType == 2)
+            <div class="account-li">
+                <div class="account-text">所属主编:</div>
+                <div class="account-right">$!vo.managerName</div>
+            </div>
+        #end
+        <div class="account-btn">
+            #if($!vo.userType == 1)
+                <button type="button" class="layui-btn" onclick="window.location.href='/manage/user'">
+                    管理编委
+                </button>
+                <button type="button" class="layui-btn" onclick="window.location.href='/manage/book'">
+                    分配书目浏览权限
+                </button>
+                <button type="button" class="layui-btn" onclick="window.location.href='/manage/chapter'">
+                    分配章节编辑权限
+                </button>
+                <button type="button" class="layui-btn" onclick="window.location.href='/manage/discuss'">
+                    管理讨论区
+                </button>
+            #end
+            #if($!vo.userType == 0)
+                <button type="button" class="layui-btn" onclick="window.location.href='/manage/editor-register'">
+                    批量导入编委
+                </button>
+                <button type="button" class="layui-btn" onclick="window.location.href='/manage/manager'">
+                    主编任命
+                </button>
+            #end
+            <button type="button" class="layui-btn" onclick="window.location.href='http://user.book.com/logout'">
+                退出登录
+            </button>
+        </div>
+    </div>
+</div>
+    #parse("headfoot/footer.vm")
+
+<div class="dialog J-dialog">
+    <div class="dialog-bg J-dialog-close"></div>
+    <div class="dialog-wrap">
+        <div class="dialog_close J-dialog-close"><img src="../../../img/close_ico.png" alt=""></div>
+        <div class="dialog-cnt">
+            <input name="newName" class="dialog-textarea dialog-input" placeholder="请输入新的用户名"/>
+            <div class="dialog-btn layui-btn J-dialog-btn">提交</div>
+        </div>
+    </div>
+</div>
+
+<script src="../../../js/jquery.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/home.js"></script>
+</body>
+</html>

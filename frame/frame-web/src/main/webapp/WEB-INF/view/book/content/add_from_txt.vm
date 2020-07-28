@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>内容批量导入</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>内容批量导入</p>
+        <p class="en">add from txt</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/book/detail/$!book.bookId">$!book.bookName</a> >
+        <a href="/chapter/list?bookId=$!book.bookId">章节列表</a> > <a
+                href="/content/list?chapterId=$!chapterId">内容列表</a> >
+        <span>内容批量导入</span>
+    </div>
+</div>
+<div class="layui-container">
+    <div class="account-center public-bg account-content">
+        <form action="/content/addFromTxt" method="post" id="form" name="form" enctype="multipart/form-data">
+            <div class="account-li">
+
+                <div class="account-right">
+                    <input type="hidden" id="chapterId" name="chapterId" value="$!chapterId">
+                    <input type="file" class="account-input" id="files" name="files" multiple="multiple" placeholder="选择文件">
+
+                </div>
+            </div>
+            <div class="account-btn">
+                <button type="submit" class="layui-btn">导入</button>
+            </div>
+        </form>
+    </div>
+</div>
+    #parse("headfoot/footer.vm")
+</body>
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.frame.dao.IReferenceInfoDao">
+    <resultMap id="BaseResultMap" type="edu.njucm.book.frame.domain.ReferenceInfo">
+        <id column="reference_id" property="referenceId" jdbcType="NUMERIC"/>
+        <result column="book_id" property="bookId" jdbcType="NUMERIC"/>
+        <result column="author_name" property="authorName" jdbcType="VARCHAR"/>
+        <result column="reference_name" property="referenceName" jdbcType="VARCHAR"/>
+        <result column="reference_type" property="referenceType" jdbcType="VARCHAR"/>
+        <result column="publish_place" property="publishPlace" jdbcType="NUMERIC"/>
+        <result column="publish_name" property="publishName" jdbcType="VARCHAR"/>
+        <result column="publish_year" property="publishYear" jdbcType="NUMERIC"/>
+        <result column="start_end_page" property="startEndPage" jdbcType="VARCHAR"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="save" parameterType="edu.njucm.book.frame.domain.ReferenceInfo">
+        insert into book.reference_info(book_id, author_name, reference_name, reference_type,
+            publish_place, publish_name, publish_year, start_end_page)
+        values (#{bookId}, #{authorName}, #{referenceName}, #{referenceType},
+            #{publishPlace}, #{publishName}, #{publishYear}, #{startEndPage})
+    </insert>
+
+    <update id="update" parameterType="edu.njucm.book.frame.domain.ReferenceInfo">
+        update book.reference_info
+        set book_id = #{bookId},
+            author_name = #{authorName},
+            reference_name = #{referenceName},
+            reference_type = #{referenceType},
+            publish_place = #{publishPlace},
+            publish_name = #{publishName},
+            publish_year = #{publishYear},
+            start_end_page = #{startEndPage}
+        where reference_id = #{referenceId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from book.reference_info
+        where reference_id = #{referenceId}
+    </delete>
+
+    <select id="getReferenceInfoByReferenceId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select reference_id, book_id, author_name, reference_name, reference_type,
+            publish_place, publish_name, publish_year, start_end_page, add_time
+        from book.reference_info
+        where reference_id = #{referenceId}
+    </select>
+
+    <select id="listReferenceInfoByBookId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select reference_id, book_id, author_name, reference_name, reference_type,
+            publish_place, publish_name, publish_year, start_end_page, add_time
+        from book.reference_info
+        where book_id = #{bookId}
+        order by add_time asc
+    </select>
+</mapper>

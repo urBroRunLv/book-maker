@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>all book</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>书籍列表</p>
+        <p class="en">All Books</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <span>书籍列表</span></div>
+    #if($!userType==0||$!userType==1)
+        <button onclick="window.location.href='//www.book.com/book/add'" class="layui-btn">新增书本</button>
+    #end
+</div>
+<div class="layui-container">
+    <div class="book-list">
+        #foreach($book in $books)
+            <div class="book-li J-book-li">
+                <div class="book-li-cnt">
+                    <a class="hv-img" href="//www.book.com/book/detail/${book.bookId}">
+                        <img src="//www.book.com/getPicByPicId/${book.bookPic}"
+                             alt="${book.bookName}">
+                    </a>
+                    <div class="book-text">
+                        <div class="book-tit">${book.bookName}</div>
+                        <div class="book-btn">
+                            <button onclick="window.location.href='//www.book.com/book/detail/${book.bookId}'"
+                                    class="layui-btn">
+                                开始编书
+                            </button>
+                            #if($!userType==0||$!userType==1)
+                                <button onclick="window.location.href='//www.book.com/book/update/${book.bookId}'"
+                                        class="layui-btn">修改
+                                </button>
+                                <button type="button" data-bookId="${book.bookId}" class="layui-btn J-book-del">删除
+                                </button>
+                            #end
+                        </div>
+                    </div>
+                </div>
+            </div>
+        #end
+    </div>
+    <div id="casePage"></div>
+
+    <div class="no-result #if($books.empty)show #else hide#end">#*show：显示  hide：隐藏*#
+        <img src="../../../img/kong.png" alt="">
+        <div class="no-result-text">列表空空如也~</div>
+    </div>
+
+</div>
+    #parse("headfoot/footer.vm")
+<script src="../../../js/jquery.js"></script>
+<script src="../../../js/bookList.js"></script>
+</body>
+</html>

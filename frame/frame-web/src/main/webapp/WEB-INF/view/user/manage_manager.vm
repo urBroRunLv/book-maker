@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>user management</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>主编任命</p>
+        <p class="en">appoint manager</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/user">账户中心</a> > <span>主编任命</span></div>
+</div>
+<div class="layui-container">
+    <div class="account-center public-bg">
+        <form action="/manage/manager" method="post" id="form" name="form">
+            <div class="account-li">
+                <div class="account-text">用户id:</div>
+                <div class="account-right">
+                    <input type="text" class="account-input" id="userIds" name="userIds"
+                           placeholder="请输入你想任命为主编的用户id，如需任命多个请用英文逗号分隔">
+                </div>
+                <button type="submit" class="layui-btn">提交</button>
+            </div>
+        </form>
+
+        <div class="account-user">
+            #if($!managers.empty)
+                <div class="account-li">
+                    <div class="account-text"></div>
+                    <div class="account-right">暂无绑定编委，请添加</div>
+                </div>
+            #end
+            <div class="account-tit">主编列表：</div>
+            #foreach($user in $!managers)
+                <div class="account-list">
+                    <div class="account-cnt">
+                        <div class="account-li">
+                            <div class="account-text">用户ID:</div>
+                            <div class="account-right">$!user.userId</div>
+                        </div>
+                        <div class="account-li">
+                            <div class="account-text">姓名:</div>
+                            <div class="account-right">$!user.userName</div>
+                        </div>
+                        <div class="account-li">
+                            <div class="account-text">电话号码:</div>
+                            <div class="account-right">$!user.userPhone</div>
+                        </div>
+                    </div>
+                </div>
+            #end
+        </div>
+    </div>
+</div>
+    #parse("headfoot/footer.vm")
+</body>
+</html>

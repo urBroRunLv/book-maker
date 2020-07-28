@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.frame.dao.IUserTopMapDao">
+    <resultMap id="BaseResultMap" type="edu.njucm.book.frame.domain.chat.UserTopMap">
+        <id column="rec_id" property="recId" jdbcType="DECIMAL"/>
+        <result column="user_id" property="userId" jdbcType="DECIMAL"/>
+        <result column="chat_id" property="chatId" jdbcType="DECIMAL"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="add" parameterType="edu.njucm.book.frame.domain.chat.UserTopMap">
+        insert into book.user_top_map(user_id, chat_id)
+        values (#{userId}, #{chatId})
+    </insert>
+
+    <delete id="delete">
+        delete from book.user_top_map
+        where user_id = #{userId}
+        and chat_id = #{chatId}
+    </delete>
+
+    <select id="getTopCountByUserIdAndChatId" resultType="java.lang.Integer">
+        select count(1) from book.user_top_map
+        where user_id = #{userId}
+        and chat_id = #{chatId}
+    </select>
+
+</mapper>

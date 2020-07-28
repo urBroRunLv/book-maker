@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.frame.dao.IBookInfoDao">
+    <resultMap id="BaseResultMap" type="edu.njucm.book.frame.domain.BookInfo">
+        <id column="book_id" property="bookId" jdbcType="NUMERIC"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="book_status" property="bookStatus" jdbcType="NUMERIC"/>
+        <result column="book_pic" property="bookPic" jdbcType="NUMERIC"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="save" parameterType="edu.njucm.book.frame.domain.BookInfo">
+        insert into book_info(book_name, book_status, book_pic, add_time)
+        values (#{bookInfo.bookName}, #{bookInfo.bookStatus}, #{bookInfo.bookPic}, now())
+    </insert>
+
+    <select id="getId" resultType="java.lang.Long">
+        select max(book_id) from book_info
+    </select>
+
+    <update id="update" parameterType="edu.njucm.book.frame.domain.BookInfo">
+        update book.book_info
+        set book_name = #{bookInfo.bookName},
+            book_status = #{bookInfo.bookStatus},
+            book_pic = #{bookInfo.bookPic}
+        where book_id = #{bookInfo.bookId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from book.book_info
+        where book_id = #{bookId}
+    </delete>
+
+    <select id="getBookInfoByBookId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select book_id, book_name, book_status, book_pic, add_time
+        from book.book_info
+        where book_id = #{bookId}
+        and book_status = 0
+    </select>
+
+    <select id="listBookInfoByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select distinct a.book_id, a.book_name, a.book_status, a.book_pic, a.add_time
+        from book.book_info a, book.user_book_map b
+        where a.book_id = b.book_id
+        and b.user_id = #{userId}
+        and a.book_status = 0
+        and b.delete_flag = 0
+        order by b.add_time desc
+    </select>
+
+    <select id="listBookInfoBySearchParam" resultMap="BaseResultMap">
+        select book_id, book_name, book_status, book_pic, add_time
+        from book.book_info
+        where book_id = #{bookInfo.bookId}
+        or book_name like #{bookInfo.bookName}
+        or book_status = #{bookInfo.bookStatus}
+        and book_status = 0
+        order by add_time desc
+    </select>
+</mapper>

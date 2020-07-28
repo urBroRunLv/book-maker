@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>index</title>
+    <link rel="stylesheet" type="text/css" href="../../css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+## banner
+<div>
+    <div class="layui-carousel" id="banner">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide banner-slider">
+                    <img src="../../img/banner1.jpg" alt="use">
+                    <div class="panel">
+                        <p class="title">编书系统</p>
+                        <p class="title">快捷编书体验</p>
+                        <p><button class="layui-btn" onclick="window.location.href='/book/list'">开始编书</button></p>
+                    </div>
+                </div>
+                <div class="swiper-slide banner-slider">
+                    <img src="../../img/banner2.jpg" alt="register">
+                    <div class="panel">
+                        <p class="title">编书系统</p>
+                        <p class="title">快捷编书体验</p>
+                        <p><button class="layui-btn" onclick="window.location.href='http://user.book.com/register'">即刻注册</button></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+        
+    </div>
+</div>
+    #parse("headfoot/footer.vm")
+
+<script src="../../js/jquery.js"></script>
+<script src="../../js/swiper.min.js"></script>
+<script src="../../js/index.js"></script>
+</body>
+</html>

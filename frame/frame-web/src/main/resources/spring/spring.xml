@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation=
+               "http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/tx
+                http://www.springframework.org/schema/tx/spring-tx.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+                http://www.springframework.org/schema/aop
+                http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="edu.njucm.book.frame,edu.njucm.book.chart.service,edu.njucm.book.user.service"/>
+
+    <import resource="classpath:spring/spring-database.xml"/>
+
+    <bean id="loginUrlControlServiceImpl" name="loginUrlControlServiceImpl" class="edu.njucm.book.user.web.util.LoginUrlControl">
+        <property name="excludeLoginUrl">
+            <list>
+                <value><![CDATA[^/getPicByPicId/.*$]]></value>
+                <value><![CDATA[^/error/.*$]]></value>
+                <value><![CDATA[^/js/.*$]]></value>
+                <value><![CDATA[^/css/.*$]]></value>
+                <value><![CDATA[^/img/.*$]]></value>
+                <value><![CDATA[^/font/.*$]]></value>
+            </list>
+        </property>
+    </bean>
+</beans>

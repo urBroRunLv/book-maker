@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>About Us</title>
+    <link rel="stylesheet" type="text/css" href="../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/glo.css">
+</head>
+
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>关于我们</p>
+        <p class="en">About Us</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <span>关于我们</span></div>
+</div>
+<div class="layui-container">
+
+</div>
+    #parse("headfoot/footer.vm")
+</body>
+</html>

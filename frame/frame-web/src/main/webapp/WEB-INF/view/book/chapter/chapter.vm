@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>all chapters</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>章节列表</p>
+        <p class="en">All Chapters</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/book/detail/$bookId">$!bookName</a> > <span>章节列表</span>
+    </div>
+    #if($!user.userType!=2)
+        <div class="nav-right">
+            <button onclick="window.location.href='//www.book.com/chapter/add?bookId=$bookId'" class="layui-btn">新增章节
+            </button>
+            <span>注：只能在章节末尾最后新增</span>
+        </div>
+    #end
+</div>
+<div class="layui-container public-bg">
+    <div class="chapter-list-wrap">
+        #foreach($chapter in $chapters)
+            <div class="chapter-list">
+                <span>
+                    <a href="/content/list?chapterId=$!chapter.chapterId">第 $!chapter.chapterNo 章&nbsp;&nbsp;$!chapter.chapterName</a>
+                </span>
+                <span>
+                    <a class="layui-btn btn-view" href="/content/list?chapterId=$!chapter.chapterId">查看内容详情列表</a>
+                    #if($!chapter.editFlag==true)
+                        <a class="layui-btn" href="/question/list?chapterId=$!chapter.chapterId">查看习题列表</a>
+                        <a class="layui-btn" href="/chapter/update/$!chapter.chapterId">修改</a>
+                        #if($!user.userType!=2)
+                            <a class="layui-btn J-chapter-del" data-chapterId="$!chapter.chapterId"
+                               href="javascript:void(0)">删除</a>
+                        #end
+                    #end
+                </span>
+            </div>
+        #end
+    </div>
+</div>
+
+<div id="casePage"></div>
+
+<div class="no-result #if($chapters.empty)show #else hide#end">#*show：显示  hide：隐藏*#
+    <img src="../../../img/kong.png" alt="">
+    <div class="no-result-text">列表空空如也~</div>
+</div>
+
+    #parse("headfoot/footer.vm")
+<script src="../../../js/jquery.js"></script>
+<script src="../../../js/chapter.js"></script>
+</body>
+</html>
+

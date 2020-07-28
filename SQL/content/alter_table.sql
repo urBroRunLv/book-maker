@@ -1,0 +1,1 @@
+ALTER TABLE book.text_info CHANGE text_id text_id INT AUTO_INCREMENT;

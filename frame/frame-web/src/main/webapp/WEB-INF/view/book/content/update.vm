@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>edit chapter</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>修改内容信息</p>
+        <p class="en">Edit Chapter</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/book/detail/$!book.bookId">$!book.bookName</a> >
+        <a href="/chapter/list?bookId=$!book.bookId">章节列表</a> > <a
+                href="/content/list?chapterId=$!VO.chapterId">内容列表</a> >
+        <span>修改内容</span>
+    </div>
+</div>
+
+<div class="layui-container public-bg">
+
+    <div class="form-label">
+        #if($VO.errorMsg)
+            <div class="form-error show">#*show：显示  hide：隐藏*#
+                <img src="../../../img/zhuyi.png" alt="">
+                <span>$VO.errorMsg</span>
+            </div>
+        #end
+        <span class="span-style">所属书本：《$!{book.bookName}》</span>
+        <form class="form-type J-form-type" name="formType">
+            <span class="label-text">请选择内容类型:</span>
+            <span class="label-radio"><input type="radio" name="radioType" value="1" #if($!VO.contentType == 1)checked#end>文本信息</span>
+            <span class="label-radio"><input type="radio" name="radioType" value="2" #if($!VO.contentType == 2)checked#end>图&nbsp;&nbsp;&nbsp;&nbsp;片</span>
+            <span class="label-radio"><input type="radio" name="radioType" value="4" #if($!VO.contentType == 4)checked#end>知&nbsp;识&nbsp;点</span>
+        </form>
+    </div>
+
+    <div class="form-type-wrap J-form-type-wrap">
+    ## 1
+        <div class="form-type-cnt 1" #if($!VO.contentType == 1)style="display: block"#end>
+            <form class="layui-container add-form" action="http://www.book.com/content/update" name="addForm"
+                  method="post">
+
+                <input type="hidden" id="chapterId" name="chapterId" value="$!VO.chapterId">
+                <input type="hidden" id="contentId" name="contentId" value="$!VO.contentId">
+                <input type="hidden" id="contentType" name="contentType" value="1">
+                <div class="form-label">
+                    <label>
+                        <span class="label-text">内容名：</span>
+                        <input class="label-input" type="text" placeholder="请输入内容名" id="contentName" name="contentName"
+                               value="$!VO.contentName">
+                    </label>
+                </div>
+                <div class="form-label-textarea">
+                    <label>
+                        <span class="label-text-textarea">文本内容：</span>
+                        <textarea class="label-input-textarea" placeholder="请输入文本内容" id="text" name="text">$!VO.text</textarea>
+                    </label>
+                </div>
+
+                <div class="form-label">
+                    <span class="label-text">状态：</span>
+                    <span><input type="radio" name="contentStatus" id="contentStatus" value="0" #if($!VO.contentStatus == 0)checked#end>正常</span>
+                    <span><input type="radio" name="contentStatus" id="contentStatus" value="1" #if($!VO.contentStatus == 1)checked#end>删除</span>
+                </div>
+
+                <div class="form-label">
+                    <label>
+                        <button type="submit" class="submit-btn J-submit-btn">修改</button>
+                    </label>
+                </div>
+            </form>
+        </div>
+
+    ## 2
+        <div class="form-type-cnt 2" #if($!VO.contentType == 2)style="display: block"#end>
+            <form class="layui-container add-form" action="http://www.book.com/content/update" name="addForm"
+                  method="post">
+
+                <input type="hidden" id="chapterId" name="chapterId" value="$!VO.chapterId">
+                <input type="hidden" id="contentId" name="contentId" value="$!VO.contentId">
+                <input type="hidden" id="contentType" name="contentType" value="2">
+                <div class="form-label">
+                    <label>
+                        <span class="label-text">内容名：</span>
+                        <input class="label-input" type="text" placeholder="请输入内容名" id="contentName" name="contentName"
+                               value="$!VO.contentName">
+                    </label>
+                </div>
+                <div class="form-label">
+                    <label>
+                        <span class="label-text">图片：</span>
+                        <input class="input-upload" type="file" placeholder="选择文件" onchange="uploadPicContent(this)">
+                        <br>
+                        <img id="filePic" style="height: 200px; width: 200px;"
+                             #if($!VO.base64Pic)src="$!VO.base64Pic"#end >
+                        <input type="hidden" id="base64Pic" name="base64Pic" value="$!VO.base64Pic">
+                    </label>
+                </div>
+
+                <div class="form-label">
+                    <span class="label-text">状态：</span>
+                    <span><input type="radio" name="contentStatus" id="contentStatus" value="0" #if($!VO.contentStatus == 0)checked#end>正常</span>
+                    <span><input type="radio" name="contentStatus" id="contentStatus" value="1" #if($!VO.contentStatus == 1)checked#end>删除</span>
+                </div>
+
+                <div class="form-label">
+                    <label>
+                        <button type="submit" class="submit-btn J-submit-btn">修改</button>
+                    </label>
+                </div>
+            </form>
+        </div>
+
+    ## 4
+        <div class="form-type-cnt 4" #if($!VO.contentType == 4)style="display: block"#end>
+            <form class="layui-container add-form" action="http://www.book.com/content/update" name="addForm"
+                  method="post">
+
+                <input type="hidden" id="chapterId" name="chapterId" value="$!VO.chapterId">
+                <input type="hidden" id="contentId" name="contentId" value="$!VO.contentId">
+                <input type="hidden" id="contentType" name="contentType" value="4">
+                <div class="form-label">
+                    <label>
+                        <span class="label-text">内容名：</span>
+                        <input class="label-input" type="text" placeholder="请输入知识点名" id="contentName" name="contentName"
+                               value="$!VO.contentName">
+                    </label>
+                </div>
+                <div class="form-label-textarea">
+                    <label>
+                        <span class="label-text-textarea">知识点：</span>
+                        <textarea class="label-input-textarea" placeholder="请输入文本内容" id="text" name="text">$!VO.text</textarea>
+                    </label>
+                </div>
+
+                <div class="form-label">
+                    <span class="label-text">状态：</span>
+                    <span><input type="radio" name="contentStatus" id="contentStatus" value="0" #if($!VO.contentStatus == 0)checked#end>正常</span>
+                    <span><input type="radio" name="contentStatus" id="contentStatus" value="1" #if($!VO.contentStatus == 1)checked#end>删除</span>
+                </div>
+
+                <div class="form-label">
+                    <label>
+                        <button type="submit" class="submit-btn J-submit-btn">修改</button>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    #parse("headfoot/footer.vm")
+<script src="../../../js/jquery.js"></script>
+<script src="../../../js/book.js"></script>
+<script src="../../../js/chapter.js"></script>
+</body>
+</html>

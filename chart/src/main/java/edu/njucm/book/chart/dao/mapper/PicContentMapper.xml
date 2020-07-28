@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.njucm.book.chart.dao.PicContentMapper">
+
+
+    <insert id="addPicContent">
+
+        insert into pic_content values(#{id},#{content})
+
+    </insert>
+
+    <select id="findById" resultType="picContent">
+
+        select * from pic_content where id=#{id}
+
+    </select>
+
+</mapper>

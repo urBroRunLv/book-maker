@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>all references</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>参考文献列表</p>
+        <p class="en">All References</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/book/detail/$!book.bookId">$!book.bookName</a> > <a
+            href="/chapter/list?bookId=$!book.bookId">章节列表</a> > <span>参考文献列表</span>
+    </div>
+    <div class="nav-right">
+        <button onclick="window.location.href='//www.book.com/reference/add?bookId=$!book.bookId'" class="layui-btn">
+            新增参考文献
+        </button>
+        <span>注：只能在最后新增</span>
+    </div>
+</div>
+<div class="layui-container  public-bg">
+    <div class="cnt-wrap">
+        #foreach($reference in $!references)
+            #set($type = $reference.referenceType)
+            <div class="cnt-list">
+                <div class="cnt-list-left references-left">
+                    <span>[$!{velocityCount}]</span>
+                    <span>$!{reference.authorName}.</span>
+                    <span>$!{reference.referenceName}.</span>
+                    <span>[$!{reference.referenceType}].</span>
+                    <span>$!{reference.publishPlace}:</span>
+                    <span>$!{reference.publishName},</span>
+                    <span>$!{reference.publishYear}:</span>
+                    <span>$!{reference.startEndPage}.</span>
+                </div>
+                <button class="layui-btn"
+                        onclick="window.location.href='//www.book.com/reference/update/$reference.referenceId'">修改
+                </button>
+            </div>
+        #end
+
+        <div class="no-result #if($references.empty)show #else hide#end">#*show：显示  hide：隐藏*#
+            <img src="../../../img/kong.png" alt="">
+            <div class="no-result-text">列表空空如也~</div>
+        </div>
+    </div>
+</div>
+    #parse("headfoot/footer.vm")
+<script src="../../../js/jquery.js"></script>
+<script src="../../../js/common.js"></script>
+<script src="../../../js/content.js"></script>
+</body>
+</html>
+

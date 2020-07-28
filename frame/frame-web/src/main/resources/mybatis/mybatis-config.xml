@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
+    <typeAliases>
+        <typeAlias type="edu.njucm.book.chart.entity.PicContent" alias="picContent"/>
+        <typeAlias type="edu.njucm.book.chart.entity.TabContent" alias="tabContent"/>
+        <typeAlias type="edu.njucm.book.chart.entity.ChartInfo" alias="chartInfo"/>
+    </typeAliases>
+    <mappers>
+        <package name="edu.njucm.book.*.dao.mapper"/>
+    </mappers>
+
+</configuration>
+
+

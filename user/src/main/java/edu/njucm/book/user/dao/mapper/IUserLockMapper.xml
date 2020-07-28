@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.user.dao.IUserLockDao">
+    <resultMap id="BaseResultMap" type="edu.njucm.book.user.domain.UserLock">
+        <id column="rec_id" property="recId" jdbcType="DECIMAL"/>
+        <result column="user_id" property="userId" jdbcType="DECIMAL"/>
+        <result column="fail_time" property="failTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="add" parameterType="Long">
+        insert into book.user_lock(user_id, fail_time)
+        values (#{userId}, now())
+    </insert>
+
+    <delete id="delete" parameterType="Long">
+        delete from book.user_lock
+        where user_id = #{userId}
+    </delete>
+
+    <select id="countByUserId" parameterType="Long" resultType="java.lang.Integer">
+        select count(1) from book.user_lock
+        where user_id = #{userId}
+    </select>
+
+    <select id="getLockTime" parameterType="Long" resultType="java.util.Date">
+        select fail_time from book.user_lock
+        where user_id = #{userId}
+        order by fail_time desc
+        limit 1
+    </select>
+
+</mapper>

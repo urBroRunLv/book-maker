@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.njucm.book.frame.dao.IChapterInfoDao">
+    <resultMap id="BaseResultMap" type="edu.njucm.book.frame.domain.ChapterInfo">
+        <id column="chapter_id" property="chapterId" jdbcType="NUMERIC"/>
+        <result column="book_id" property="bookId" jdbcType="NUMERIC"/>
+        <result column="chapter_name" property="chapterName" jdbcType="VARCHAR"/>
+        <result column="chapter_no" property="chapterNo" jdbcType="NUMERIC"/>
+        <result column="chat_flag" property="chatFlag" jdbcType="NUMERIC"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="save" parameterType="edu.njucm.book.frame.domain.ChapterInfo">
+        insert into chapter_info(book_id, chapter_name, chapter_no, chat_flag, add_time)
+        values (#{chapterInfo.bookId}, #{chapterInfo.chapterName}, #{chapterInfo.chapterNo}, #{chapterInfo.chatFlag}, now())
+    </insert>
+
+    <select id="getId" resultType="java.lang.Long">
+        select max(chapter_id) from chapter_info
+    </select>
+
+    <update id="update" parameterType="edu.njucm.book.frame.domain.ChapterInfo">
+        update book.chapter_info
+        set book_id = #{chapterInfo.bookId},
+            chapter_name = #{chapterInfo.chapterName},
+            chapter_no = #{chapterInfo.chapterNo},
+            chat_flag = #{chapterInfo.chatFlag}
+        where chapter_id = #{chapterInfo.chapterId}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from book.chapter_info
+        where chapter_id = #{chapterId}
+    </delete>
+
+    <select id="getChapterInfoByChapterId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select chapter_id, book_id, chapter_name, chapter_no, chat_flag, add_time
+        from book.chapter_info
+        where chapter_id = #{chapterId}
+    </select>
+
+    <select id="listChapterInfoByBookId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select chapter_id, book_id, chapter_name, chapter_no, chat_flag, add_time
+        from book.chapter_info
+        where book_id = #{bookId}
+        order by chapter_no asc
+    </select>
+</mapper>

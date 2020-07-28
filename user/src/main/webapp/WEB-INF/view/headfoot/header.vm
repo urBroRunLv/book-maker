@@ -1,0 +1,19 @@
+<div class="nav">
+    <div class="layui-container">
+        <div class="nav-logo">
+            <a href="//www.book.com">
+                <h1>编书系统</h1>
+            </a>
+        </div>
+        <div class="nav-list">
+            <button>
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="layui-nav" lay-filter="">
+                <li class="layui-nav-item"><a href="//www.book.com">主页</a></li>
+##                <li class="layui-nav-item"><a href="//www.book.com/about-us">关于我们</a></li>
+                <li class="layui-nav-item"><a href="//www.book.com/user">账户中心</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

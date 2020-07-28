@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>习题批量导入</title>
+    <link rel="stylesheet" type="text/css" href="../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>习题批量导入</p>
+        <p class="en">add from txt</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/book/list">书籍列表</a> > <a
+            href="/book/detail/$!book.bookId">$!book.bookName</a> >
+        <a href="/chapter/list?bookId=$!book.bookId">章节列表</a> > <a
+                href="/question/list?chapterId=$!chapter.chapterId">习题列表</a> >
+        <span>习题批量导入</span></div>
+</div>
+<form class="layui-container add-form" action="/question/addFromTxt" method="post" id="form" name="form"
+      enctype="multipart/form-data">
+
+    <div class="form-label">
+        <span class="span-style">请选择你想批量导入的题型:</span>
+        <span><input type="radio" id="type" name="type" value="0" checked/>选择</span>
+        <span><input type="radio" id="type" name="type" value="1"/>填空</span>
+        <span><input type="radio" id="type" name="type" value="2"/>简答</span>
+    </div>
+    <div class="form-label">
+        <label>
+            <span class="label-text">知识点：</span>
+            <select id="contentId" name="contentId" lay-verify="required">
+                <option value="">请选择知识点</option>
+                #foreach($content in $contents)
+                    #if($content.contentType == 4)
+                        <option value="$content.contentId">$!content.contentName</option>
+                    #end
+                #end
+            </select>
+        </label>
+    </div>
+    <div class="form-label">
+        <input type="file" class="account-input" id="files" name="files" multiple="multiple" placeholder="选择文件">
+
+    </div>
+    <div class="form-label">
+        <button type="submit" class="layui-btn">导入</button>
+    </div>
+</form>
+<div class="footer">
+    <div class="layui-container">
+        <p class="footer-web">
+            <a href="//www.book.com">首页</a>
+            <a href="//user.book.com/register">注册</a>
+            <a href="//user.book.com/login">登录</a>
+        </p>
+        <div class="layui-row footer-contact">
+            <div class="layui-col-sm2 layui-col-lg1"><img style="height:100px; width:100px;" src="../../img/vx.jpg"
+                                                          alt="vx"/></div>
+            <div class="layui-col-sm10 layui-col-lg11">
+                <div class="layui-row">
+                    <div class="layui-col-sm6 layui-col-md8 layui-col-lg9">
+                        <p class="contact-top"><i class="layui-icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;+86 18811111111&nbsp;&nbsp;
+                        </p>
+                        <p class="contact-bottom"><i class="layui-icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;ohouhou@163.com</p>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-md4 layui-col-lg3">
+                        <p class="contact-bottom"><span class="right">南京中医药大学&nbsp;&nbsp;计算机162班&nbsp;</span></p>
+                        <p class="contact-bottom"><span class="right">084416239&nbsp;黄蕾</span></p>
+                        <p class="contact-bottom"><span class="right">毕业设计</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

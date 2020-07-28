@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>book detail</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/glo.css">
+</head>
+<body>
+    #parse("headfoot/header.vm")
+<div class="banner product">
+    <div class="title">
+        <p>书籍详情</p>
+        <p class="en">Book Detail</p>
+    </div>
+</div>
+<div class="layui-container nav-posi">
+    <div class="nav-left">当前位置：<a href="/">首页</a> > <a href="/book/list">书籍列表</a> > <span>书籍详情页</span></div>
+</div>
+<div class="layui-container">
+    <div class="book-detail public-bg">
+        <div class="detail-tit">$!VO.bookName</div>
+        <div class="detail-time">创建时间：$!VO.addTime</div>
+        <div class="detail-cnt">
+            <img src="$!VO.bookPic" alt="$!VO.bookName">
+        </div>
+        <div class="view-list">
+            <button onclick="window.location.href='//www.book.com/chapter/list?bookId=${VO.bookId}'" class="layui-btn">
+                查看章节列表
+            </button>
+            <button onclick="window.location.href='//www.book.com/reference/list?bookId=${VO.bookId}'"
+                    class="layui-btn">查看参考文献列表
+            </button>
+            #if($!userType==0||$!userType==1)
+                <button onclick="window.location.href='//www.book.com/book/update/$!VO.bookId'" class="layui-btn">修改</button>
+                <button onclick="window.location.href='//www.book.com/book/download/$!VO.bookId'" class="layui-btn">导出</button>
+            #end
+        </div>
+    </div>
+</div>
+    #parse("headfoot/footer.vm")
+</body>
+</html>
