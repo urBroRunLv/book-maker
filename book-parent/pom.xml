@@ -43,7 +43,7 @@
         <ojdbc.version>6</ojdbc.version>
         <mysql-connector.version>5.1.30</mysql-connector.version>
         <jstl.version>1.2</jstl.version>
-        <taglibs-standard.version>1.2.1</taglibs-standard.version>
+        <taglibs-standard.version>1.2.5</taglibs-standard.version>
         <jasypt.version>1.8</jasypt.version>
         <commons-fileupload.version>1.2</commons-fileupload.version>
     </properties>
