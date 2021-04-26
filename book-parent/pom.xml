@@ -20,7 +20,7 @@
         <logback.version>1.1.11</logback.version>
         <guava.version>18.0</guava.version>
         <commons-lang3.version>3.5</commons-lang3.version>
-        <commons-io.verion>2.5</commons-io.verion>
+        <commons-io.verion>2.7</commons-io.verion>
         <commons-codec.version>1.10</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <spring.version>4.2.9.RELEASE</spring.version>
