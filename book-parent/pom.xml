@@ -41,7 +41,7 @@
         <aspectj.version>1.8.9</aspectj.version>
         <fastjson.version>1.2.53</fastjson.version>
         <ojdbc.version>6</ojdbc.version>
-        <mysql-connector.version>5.1.30</mysql-connector.version>
+        <mysql-connector.version>8.0.28</mysql-connector.version>
         <jstl.version>1.2</jstl.version>
         <taglibs-standard.version>1.2.1</taglibs-standard.version>
         <jasypt.version>1.8</jasypt.version>
