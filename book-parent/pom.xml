@@ -45,7 +45,7 @@
         <jstl.version>1.2</jstl.version>
         <taglibs-standard.version>1.2.1</taglibs-standard.version>
         <jasypt.version>1.8</jasypt.version>
-        <commons-fileupload.version>1.2</commons-fileupload.version>
+        <commons-fileupload.version>1.3.3</commons-fileupload.version>
     </properties>
 
     <dependencyManagement>
